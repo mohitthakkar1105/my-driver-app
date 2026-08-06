@@ -1,6 +1,5 @@
 package com.example.driverapp.ui.screen.Otp
 
-import android.text.style.StyleSpan
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -44,8 +43,6 @@ import com.example.driverapp.ui.components.CustomImage
 import com.example.driverapp.ui.components.CustomOtp
 import com.example.driverapp.ui.navigation.AppController
 import com.example.driverapp.ui.navigation.RegistrationRoute
-import com.example.driverapp.ui.screen.Registration.Registration
-import com.example.driverapp.ui.screen.login.LoginViewModel
 import com.example.driverapp.ui.theme.DriverBlack
 
 @OptIn(ExperimentalMaterial3Api::class)

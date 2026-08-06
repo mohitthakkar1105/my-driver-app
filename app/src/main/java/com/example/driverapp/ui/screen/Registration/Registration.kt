@@ -1,4 +1,5 @@
 package com.example.driverapp.ui.screen.Registration
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,6 +21,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,9 +29,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.driverapp.ui.components.AppButton
 import com.example.driverapp.ui.components.CustomIcon
 import com.example.driverapp.ui.navigation.AppController
+import com.example.driverapp.ui.screen.Registration.composables.PersonalInformation
 import com.example.driverapp.ui.theme.DriverBlack
 import com.example.learnjetpackcompose.stepper.Stepper
 
@@ -38,6 +43,12 @@ import com.example.learnjetpackcompose.stepper.Stepper
 fun Registration(
     appController: AppController
 ) {
+
+    val viewModel = viewModel<RegistrationViewModel>()
+
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+
     val labels = listOf(
         "Personal Information",
         "Documents Information",
@@ -143,18 +154,18 @@ fun Registration(
                     )
                 }
                 Spacer(
-                    modifier = Modifier.height(20.dp)
+                    modifier = Modifier.height(25.dp)
                 )
                 HorizontalPager(
                     state = pagerState,
                     userScrollEnabled = false,
                     modifier = Modifier
-                        .fillMaxSize()
+                        .weight(1f)
                         .background(
                             color = Color.White
                         )
                 ) {
-
+                    PersonalInformation()
                 }
             }
         }
