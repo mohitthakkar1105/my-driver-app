@@ -1,7 +1,5 @@
 package com.example.driverapp.ui.screen.Registration
-
 import androidx.lifecycle.ViewModel
-import com.example.driverapp.ui.screen.login.LoginUiState
 import com.example.driverapp.ui.screen.login.RegistrationUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,8 +12,8 @@ class RegistrationViewModel : ViewModel() {
 
     val uiState = _uiState.asStateFlow()
 
-    fun onEvent(event: RegistrationEvent){
-        when(event) {
+    fun onEvent(event: RegistrationEvent) {
+        when (event) {
 
             is RegistrationEvent.OnImageSelected -> {
 
@@ -25,6 +23,7 @@ class RegistrationViewModel : ViewModel() {
                     )
                 }
             }
+
             is RegistrationEvent.onNameChange -> {
                 _uiState.update {
                     it.copy(
@@ -32,10 +31,27 @@ class RegistrationViewModel : ViewModel() {
                     )
                 }
             }
+
             is RegistrationEvent.onLastChange -> {
                 _uiState.update {
                     it.copy(
                         lastName = event.name
+                    )
+                }
+            }
+
+            is RegistrationEvent.onDateChange -> {
+                _uiState.update {
+                    it.copy(
+                        dateOfBirth = event.date
+                    )
+                }
+            }
+
+            is RegistrationEvent.onGenderChange -> {
+                _uiState.update {
+                    it.copy(
+                        selectGender = event.gender
                     )
                 }
             }

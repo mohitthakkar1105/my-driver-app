@@ -1,4 +1,5 @@
 package com.example.driverapp.ui.components
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -17,13 +18,24 @@ fun RegistrationTextField(
     value: String,
     onChange: (String) -> Unit,
     icon: ImageVector,
-    hint: String
+    hint: String,
+    readOnly: Boolean = false,
+    modifier: Modifier = Modifier
+        .fillMaxWidth()
+        .padding(horizontal = 20.dp)
+        .background(
+            color = Color.Gray.copy(
+                alpha = 0.1f
+            ),
+            shape = RoundedCornerShape(10.dp),
+        ),
 ) {
     OutlinedTextField(
         value = value,
         onValueChange = {
             onChange(it)
         },
+        readOnly = readOnly,
         shape = RoundedCornerShape(10.dp),
         prefix = {
             CustomIcon(
@@ -35,15 +47,7 @@ fun RegistrationTextField(
                 text = hint
             )
         },
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 20.dp)
-            .background(
-                color = Color.Gray.copy(
-                    alpha = 0.1f
-                ),
-                shape = RoundedCornerShape(10.dp),
-            ),
+        modifier = modifier,
         colors = OutlinedTextFieldDefaults.colors(
             focusedBorderColor = Color.Black,
         ),

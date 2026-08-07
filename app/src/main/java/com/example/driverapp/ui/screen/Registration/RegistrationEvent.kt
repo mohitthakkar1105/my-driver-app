@@ -15,4 +15,12 @@ sealed interface RegistrationEvent {
     data class onLastChange(
         val name: String
     ) : RegistrationEvent
+
+    data class onDateChange(
+        val date: String
+    ) : RegistrationEvent
+
+    data class onGenderChange(
+        val gender: Int
+    ) : RegistrationEvent
 }
