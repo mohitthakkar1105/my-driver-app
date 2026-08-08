@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -11,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -19,7 +21,6 @@ fun RegistrationTextField(
     onChange: (String) -> Unit,
     icon: ImageVector,
     hint: String,
-    readOnly: Boolean = false,
     modifier: Modifier = Modifier
         .fillMaxWidth()
         .padding(horizontal = 20.dp)
@@ -35,7 +36,7 @@ fun RegistrationTextField(
         onValueChange = {
             onChange(it)
         },
-        readOnly = readOnly,
+        singleLine = true,
         shape = RoundedCornerShape(10.dp),
         prefix = {
             CustomIcon(
@@ -44,7 +45,9 @@ fun RegistrationTextField(
         },
         placeholder = {
             Text(
-                text = hint
+                text = hint,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
         },
         modifier = modifier,

@@ -1,5 +1,4 @@
 package com.example.driverapp.ui.screen.Registration
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,9 +33,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.driverapp.ui.components.AppButton
 import com.example.driverapp.ui.components.CustomIcon
 import com.example.driverapp.ui.navigation.AppController
+import com.example.driverapp.ui.screen.Registration.composables.AadhaarInformation
 import com.example.driverapp.ui.screen.Registration.composables.PersonalInformation
+import com.example.driverapp.ui.screen.Registration.composables.UploadDocuments
+import com.example.driverapp.ui.screen.Registration.composables.VehicleInformation
 import com.example.driverapp.ui.theme.DriverBlack
 import com.example.learnjetpackcompose.stepper.Stepper
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -51,8 +54,8 @@ fun Registration(
 
     val labels = listOf(
         "Personal Information",
-        "Documents Information",
-        "Aadhar Information",
+        "Documents Details",
+        "Aadhar Details",
         "Vehicle Information"
     )
 
@@ -90,23 +93,77 @@ fun Registration(
             )
         },
         bottomBar = {
+            if (pagerState.currentPage == 0) {
 
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .navigationBarsPadding()
-                    .background(MaterialTheme.colorScheme.surface)
-                    .height(70.dp)
-            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .navigationBarsPadding()
+                        .padding(
+                            top = 5.dp
+                        )
+                        .background(MaterialTheme.colorScheme.surface)
+                        .height(70.dp)
+                ) {
 
-                AppButton(
-                    text = "Next",
-                    onClick = {
+                    AppButton(
+                        text = "Next",
+                        onClick = {
+                            scope.launch {
+                                pagerState.animateScrollToPage(
+                                    pagerState.currentPage + 1
+                                )
+                            }
+                        },
+                        modifier = Modifier.padding(horizontal = 20.dp),
+                        cornerRadius = 10
+                    )
+                }
+            } else {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .navigationBarsPadding()
+                        .padding(
+                            top = 10.dp
+                        )
+                        .background(MaterialTheme.colorScheme.surface)
+                        .height(70.dp)
+                ) {
 
-                    },
-                    modifier = Modifier.padding(horizontal = 20.dp),
-                    cornerRadius = 10
-                )
+                    Row(
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        AppButton(
+                            text = "Back",
+                            onClick = {
+                                scope.launch {
+                                    pagerState.animateScrollToPage(
+                                        pagerState.currentPage - 1
+                                    )
+                                }
+                            },
+                            modifier = Modifier
+                                .padding(horizontal = 20.dp)
+                                .weight(1f),
+                            cornerRadius = 10
+                        )
+                        AppButton(
+                            text = "Next",
+                            onClick = {
+                                scope.launch {
+                                    pagerState.animateScrollToPage(
+                                        pagerState.currentPage + 1
+                                    )
+                                }
+                            },
+                            modifier = Modifier
+                                .padding(horizontal = 20.dp)
+                                .weight(1f),
+                            cornerRadius = 10
+                        )
+                    }
+                }
             }
         }
     ) { paddingValues ->
@@ -164,8 +221,13 @@ fun Registration(
                         .background(
                             color = Color.White
                         )
-                ) {
-                    PersonalInformation()
+                ) { page ->
+                    when (page) {
+                        0 -> PersonalInformation()
+                        1 -> UploadDocuments()
+                        2 -> AadhaarInformation()
+                        3 -> VehicleInformation()
+                    }
                 }
             }
         }
