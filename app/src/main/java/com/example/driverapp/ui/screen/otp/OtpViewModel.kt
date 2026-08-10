@@ -1,4 +1,4 @@
-package com.example.driverapp.ui.screen.Otp
+package com.example.driverapp.ui.screen.otp
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

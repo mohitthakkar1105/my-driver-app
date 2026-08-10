@@ -1,4 +1,4 @@
-package com.example.driverapp.ui.screen.Registration.composables
+package com.example.driverapp.ui.screen.registration.composables
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -44,8 +44,8 @@ import com.example.driverapp.ui.components.CustomIcon
 import com.example.driverapp.ui.components.GenderSelectionBox
 import com.example.driverapp.ui.components.ImagePreview
 import com.example.driverapp.ui.components.RegistrationTextField
-import com.example.driverapp.ui.screen.Registration.RegistrationEvent
-import com.example.driverapp.ui.screen.Registration.RegistrationViewModel
+import com.example.driverapp.ui.screen.registration.RegistrationEvent
+import com.example.driverapp.ui.screen.registration.RegistrationViewModel
 import com.example.driverapp.ui.theme.DriverBlack
 import com.example.learnjetpackcompose.ImagePicker.rememberGalleryPicker
 import java.text.SimpleDateFormat

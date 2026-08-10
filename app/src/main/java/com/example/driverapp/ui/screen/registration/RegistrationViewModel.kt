@@ -1,4 +1,4 @@
-package com.example.driverapp.ui.screen.Registration
+package com.example.driverapp.ui.screen.registration
 
 import androidx.lifecycle.ViewModel
 import com.example.driverapp.ui.screen.login.RegistrationUiState
@@ -99,6 +99,78 @@ class RegistrationViewModel : ViewModel() {
                 _uiState.update {
                     it.copy(
                         aadhaarNumber = event.aadhaar
+                    )
+                }
+            }
+
+            is RegistrationEvent.onSelectingVehicle -> {
+                _uiState.update {
+                    it.copy(
+                        selectVehicle = event.Vehicle,
+                        selectVehicleSubType = event.VehicleSubType
+                    )
+                }
+            }
+            is RegistrationEvent.onSelectingVehicleSubType -> {
+                _uiState.update {
+                    it.copy(
+                        selectedSubType = event.CurrentVehicleSubType
+                    )
+                }
+            }
+            is RegistrationEvent.onChangeVehicleNumber -> {
+                _uiState.update {
+                    it.copy(
+                        vehicleNumber = event.vehicleNumber
+                    )
+                }
+            }
+            is RegistrationEvent.onChangeRcNumber -> {
+                _uiState.update {
+                    it.copy(
+                        rcNumber = event.rcNumber
+                    )
+                }
+            }
+            is RegistrationEvent.onChangeInsuranceNumber -> {
+                _uiState.update {
+                    it.copy(
+                        insuranceNumber = event.insuranceNumber
+                    )
+                }
+            }
+            is RegistrationEvent.onChangeCapacityNumber -> {
+                _uiState.update {
+                    it.copy(
+                        capacity = event.capacity
+                    )
+                }
+            }
+            is RegistrationEvent.onImageSelectedVehicle -> {
+                _uiState.update {
+                    it.copy(
+                        selectedImageVehicle = event.uri
+                    )
+                }
+            }
+            is RegistrationEvent.onImageSelectedRc -> {
+                _uiState.update {
+                    it.copy(
+                        selectedImageRc = event.uri
+                    )
+                }
+            }
+            is RegistrationEvent.onImageSelectedInsurance -> {
+                _uiState.update {
+                    it.copy(
+                        selectedImageInsurance = event.uri
+                    )
+                }
+            }
+            is RegistrationEvent.onInsuranceExpiry -> {
+                _uiState.update {
+                    it.copy(
+                        insuranceExpiry = event.expiry
                     )
                 }
             }

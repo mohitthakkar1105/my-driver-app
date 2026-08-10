@@ -1,4 +1,4 @@
-package com.example.driverapp.ui.screen.Registration.composables
+package com.example.driverapp.ui.screen.registration.composables
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.rememberScrollState
@@ -14,8 +14,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.driverapp.ui.components.AppTextFieldLabel
 import com.example.driverapp.ui.components.RegistrationTextField
 import com.example.driverapp.ui.components.SelectDocumentImage
-import com.example.driverapp.ui.screen.Registration.RegistrationEvent
-import com.example.driverapp.ui.screen.Registration.RegistrationViewModel
+import com.example.driverapp.ui.screen.registration.RegistrationEvent
+import com.example.driverapp.ui.screen.registration.RegistrationViewModel
 import com.example.learnjetpackcompose.ImagePicker.rememberGalleryPicker
 
 @Composable

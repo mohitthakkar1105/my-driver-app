@@ -6,11 +6,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import com.example.driverapp.ui.navigation.SplashRoute
-import com.example.driverapp.ui.navigation.LoginRoute
-import com.example.driverapp.ui.navigation.OtpRoute
-import com.example.driverapp.ui.screen.Otp.Otp
-import com.example.driverapp.ui.screen.Registration.Registration
+import com.example.driverapp.ui.screen.otp.Otp
+import com.example.driverapp.ui.screen.registration.Registration
 import com.example.driverapp.ui.screen.login.Login
 import com.example.driverapp.ui.screen.splash.Splash
 

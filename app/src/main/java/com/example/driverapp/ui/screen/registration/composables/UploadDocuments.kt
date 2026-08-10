@@ -1,4 +1,4 @@
-package com.example.driverapp.ui.screen.Registration.composables
+package com.example.driverapp.ui.screen.registration.composables
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -26,11 +26,10 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.driverapp.ui.components.AppTextFieldLabel
-import com.example.driverapp.ui.components.CustomIcon
 import com.example.driverapp.ui.components.RegistrationTextField
 import com.example.driverapp.ui.components.SelectDocumentImage
-import com.example.driverapp.ui.screen.Registration.RegistrationEvent
-import com.example.driverapp.ui.screen.Registration.RegistrationViewModel
+import com.example.driverapp.ui.screen.registration.RegistrationEvent
+import com.example.driverapp.ui.screen.registration.RegistrationViewModel
 import com.example.learnjetpackcompose.ImagePicker.rememberGalleryPicker
 
 @Composable

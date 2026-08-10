@@ -1,4 +1,4 @@
-package com.example.driverapp.ui.screen.Registration
+package com.example.driverapp.ui.screen.registration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,10 +33,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.driverapp.ui.components.AppButton
 import com.example.driverapp.ui.components.CustomIcon
 import com.example.driverapp.ui.navigation.AppController
-import com.example.driverapp.ui.screen.Registration.composables.AadhaarInformation
-import com.example.driverapp.ui.screen.Registration.composables.PersonalInformation
-import com.example.driverapp.ui.screen.Registration.composables.UploadDocuments
-import com.example.driverapp.ui.screen.Registration.composables.VehicleInformation
+import com.example.driverapp.ui.screen.registration.composables.AadhaarInformation
+import com.example.driverapp.ui.screen.registration.composables.PersonalInformation
+import com.example.driverapp.ui.screen.registration.composables.UploadDocuments
+import com.example.driverapp.ui.screen.registration.composables.VehicleInformation
 import com.example.driverapp.ui.theme.DriverBlack
 import com.example.learnjetpackcompose.stepper.Stepper
 import kotlinx.coroutines.launch
