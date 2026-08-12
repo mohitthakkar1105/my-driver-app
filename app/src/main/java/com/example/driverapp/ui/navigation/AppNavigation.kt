@@ -6,9 +6,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import com.example.driverapp.ui.screen.otp.Otp
+import com.example.driverapp.ui.screen.home.HomeScreen
 import com.example.driverapp.ui.screen.registration.Registration
 import com.example.driverapp.ui.screen.login.Login
+import com.example.driverapp.ui.screen.otp.Otp
 import com.example.driverapp.ui.screen.splash.Splash
 
 @Composable
@@ -50,6 +51,12 @@ fun AppNavigation() {
 
         composable<RegistrationRoute> {
             Registration(
+                appController = appController
+            )
+        }
+
+        composable<HomeRoute> {
+            HomeScreen(
                 appController = appController
             )
         }

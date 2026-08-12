@@ -1,6 +1,7 @@
 package com.example.driverapp.ui.screen.registration
 
 import android.net.Uri
+import com.example.driverapp.ui.screen.otp.OtpEvent
 
 sealed interface RegistrationEvent {
 
@@ -88,4 +89,6 @@ sealed interface RegistrationEvent {
     data class  onImageSelectedInsurance(
         val uri : Uri
     ) : RegistrationEvent
+
+    data object OnSubmittingRegistration : RegistrationEvent
 }

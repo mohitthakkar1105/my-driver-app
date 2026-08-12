@@ -1,10 +1,15 @@
 package com.example.driverapp.ui.screen.registration
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.driverapp.ui.screen.login.RegistrationUiState
+import com.example.driverapp.ui.screen.otp.OtpUiEffect
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 class RegistrationViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(
@@ -12,6 +17,10 @@ class RegistrationViewModel : ViewModel() {
     )
 
     val uiState = _uiState.asStateFlow()
+
+    private val _uiEffect = MutableSharedFlow<RegistrationUiEffect>()
+
+    val uiEffect = _uiEffect.asSharedFlow()
 
     fun onEvent(event: RegistrationEvent) {
         when (event) {
@@ -171,6 +180,13 @@ class RegistrationViewModel : ViewModel() {
                 _uiState.update {
                     it.copy(
                         insuranceExpiry = event.expiry
+                    )
+                }
+            }
+            RegistrationEvent.OnSubmittingRegistration -> {
+                viewModelScope.launch {
+                    _uiEffect.emit(
+                        RegistrationUiEffect.NavigateToHome
                     )
                 }
             }

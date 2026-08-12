@@ -20,6 +20,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -33,6 +34,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.driverapp.ui.components.AppButton
 import com.example.driverapp.ui.components.CustomIcon
 import com.example.driverapp.ui.navigation.AppController
+import com.example.driverapp.ui.navigation.HomeRoute
+import com.example.driverapp.ui.navigation.RegistrationRoute
+import com.example.driverapp.ui.screen.otp.OtpUiEffect
 import com.example.driverapp.ui.screen.registration.composables.AadhaarInformation
 import com.example.driverapp.ui.screen.registration.composables.PersonalInformation
 import com.example.driverapp.ui.screen.registration.composables.UploadDocuments
@@ -65,6 +69,17 @@ fun Registration(
     val pagerState = rememberPagerState(
         pageCount = { labels.size }
     )
+
+    LaunchedEffect(Unit) {
+        viewModel.uiEffect.collect { uiEffect ->
+            when (uiEffect) {
+                is RegistrationUiEffect.NavigateToHome -> {
+                    appController.navController.navigate(HomeRoute)
+                }
+            }
+        }
+
+    }
 
     Scaffold(
         topBar = {
@@ -151,10 +166,16 @@ fun Registration(
                         AppButton(
                             text = "Next",
                             onClick = {
-                                scope.launch {
-                                    pagerState.animateScrollToPage(
-                                        pagerState.currentPage + 1
+                                if(pagerState.currentPage == 3){
+                                    viewModel.onEvent(
+                                        RegistrationEvent.OnSubmittingRegistration
                                     )
+                                }else{
+                                    scope.launch {
+                                        pagerState.animateScrollToPage(
+                                            pagerState.currentPage + 1
+                                        )
+                                    }
                                 }
                             },
                             modifier = Modifier

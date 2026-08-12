@@ -9,13 +9,14 @@ import androidx.compose.ui.res.painterResource
 fun CustomImage(
     image: Int,
     modifier: Modifier = Modifier,
-    contentScale: ContentScale = ContentScale.Fit
+    contentScale: ContentScale = ContentScale.Fit,
 ) {
     Image(
         painter = painterResource(image),
         contentDescription = null,
         modifier = modifier,
-        contentScale = contentScale
+        contentScale = contentScale,
+
     )
 }
 
