@@ -1,4 +1,6 @@
 package com.example.driverapp.ui.screen.login
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -55,6 +57,18 @@ fun Login(
     appController: AppController
 ) {
 
+    val locationPermissionLauncher =
+    rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+
+        if (isGranted) {
+            println("Permission Granted")
+        } else {
+            println("Permission Denied")
+        }
+    }
+
     var name by remember {
         mutableStateOf("")
     }
@@ -64,6 +78,11 @@ fun Login(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
+
+        locationPermissionLauncher.launch(
+            android.Manifest.permission.ACCESS_FINE_LOCATION
+        )
+
         viewModel.uiEffect.collect { uiEffect ->
             when (uiEffect) {
                 is  LoginUiEffect.NavigateToOtp -> {

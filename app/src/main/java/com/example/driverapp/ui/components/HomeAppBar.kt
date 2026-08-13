@@ -33,7 +33,9 @@ import androidx.compose.ui.unit.sp
 import com.example.driverapp.R
 
 @Composable
-fun HomeAppBar() {
+fun HomeAppBar(
+    address : String
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -82,7 +84,7 @@ fun HomeAppBar() {
                         size = 15
                     )
                     Text(
-                        text = "64, Surat, Gujarat",
+                        text = if (address.isEmpty()) "Location Unavailable" else address ,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         fontSize = 12.sp,
