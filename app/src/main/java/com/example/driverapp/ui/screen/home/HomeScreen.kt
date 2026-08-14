@@ -1,12 +1,24 @@
 package com.example.driverapp.ui.screen.home
+
 import android.location.Geocoder
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.AirlineSeatReclineExtra
+import androidx.compose.material.icons.rounded.DirectionsCar
+import androidx.compose.material.icons.rounded.LocalShipping
+import androidx.compose.material.icons.rounded.Route
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,6 +44,10 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.driverapp.ui.components.AppToggle
+import com.example.driverapp.ui.components.ChangeRoleBox
+import com.example.driverapp.ui.components.CustomIcon
+import com.example.driverapp.ui.components.StatsBox
+import com.example.driverapp.ui.components.WavingHand
 
 @Composable
 fun HomeScreen(
@@ -108,35 +124,112 @@ fun HomeScreen(
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
-            Box(
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .background(
-                        color = Color.Transparent
-                    )
+                    .fillMaxSize()
                     .padding(
                         horizontal = 20.dp,
                         vertical = 10.dp
-                    )
+                    ),
             ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(
+                            color = Color.Transparent
+                        )
                 ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Text(
+                            text = "You are online",
+                            fontSize = 21.sp,
+                            color = Color(0xFF388E3C).copy(
+                                alpha = 0.8f
+                            ),
+                            fontWeight = FontWeight.W400
+                        )
+                        Spacer(modifier = Modifier.weight(1f))
+                        AppToggle(
+                            isOnline = isOnline,
+                            onToggle = {
+                                isOnline = !isOnline
+                            }
+                        )
+                    }
+                }
+                Spacer(modifier = Modifier.height(18.dp))
+                Column() {
+                    Row {
+                        Text(
+                            text = "Hello",
+                            fontSize = 42.sp,
+                            color = Color.Black,
+                            fontWeight = FontWeight.ExtraBold
+                        )
+                        Spacer(modifier = Modifier.width(5.dp))
+                        WavingHand()
+                    }
+                    Spacer(modifier = Modifier.height(10.dp))
                     Text(
-                        text = "You are online",
-                        fontSize = 21.sp,
-                        color = Color(0xFF388E3C).copy(
-                            alpha = 0.8f
-                        ),
-                        fontWeight = FontWeight.W400
+                        text = "CabNCarry Captain",
+                        fontSize = 24.sp,
+                        color = Color.Black
                     )
-                    Spacer(modifier = Modifier.weight(1f))
-                    AppToggle(
-                        isOnline = isOnline,
-                        onToggle = {
-                            isOnline = !isOnline
-                        }
+                    Spacer(modifier = Modifier.height(5.dp))
+                    Text(
+                        text = "Ready to earn? Go online & accept rides",
+                        fontSize = 15.sp,
+                        color = Color.Black,
+                        fontWeight = FontWeight.W500
                     )
+                    Spacer(modifier = Modifier.height(21.dp))
+                    Text(
+                        text = "YOUR ROLE",
+                        fontSize = 14.sp,
+                        color = Color.Black,
+                        fontWeight = FontWeight.W900
+                    )
+                    Spacer(modifier = Modifier.height(7.dp))
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceAround
+                    ) {
+                        ChangeRoleBox(
+                            icon = Icons.Rounded.DirectionsCar,
+                            title = "Rider",
+                            color = Color(0xFFB7C145),
+                            paddingEnd = 10
+                        )
+                        ChangeRoleBox(
+                            icon = Icons.Rounded.AirlineSeatReclineExtra,
+                            title = "Intercity",
+                            color = Color(0xFFFFA733),
+                            paddingEnd = 10
+                        )
+                        ChangeRoleBox(
+                            icon = Icons.Rounded.LocalShipping,
+                            title = "Porter",
+                            color = Color(0xFF1E3BCC),
+                            paddingEnd = 0
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(27.dp))
+                    Text(
+                        text = "YOUR STATS",
+                        fontSize = 14.sp,
+                        color = Color.Black,
+                        fontWeight = FontWeight.W900
+                    )
+                    Row() {
+                        StatsBox(
+                            icon = Icons.Rounded.Route,
+                            number = 0,
+                            title = "Total",
+                            color = Color(0xFF1565C0),
+                            paddingEnd = 10
+                        )
+                    }
                 }
             }
         }
