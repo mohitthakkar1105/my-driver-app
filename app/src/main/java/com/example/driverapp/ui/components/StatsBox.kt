@@ -33,9 +33,6 @@ fun StatsBox(
             .width(
                 120.dp
             )
-            .height(
-                130.dp
-            )
             .padding(end = paddingEnd.dp)
             .background(
                 color = Color.White,
@@ -45,8 +42,10 @@ fun StatsBox(
                 color = color.copy(
                     alpha = 0.5f
                 ),
-                width = 1.dp,
+                width = 0.2.dp,
                 shape = RoundedCornerShape(15.dp)
+            ).padding(
+                vertical = 5.dp,
             ),
         contentAlignment = Alignment.Center
     ) {
@@ -55,35 +54,35 @@ fun StatsBox(
         ) {
             Box(
                 modifier = Modifier
-                    .size(26.dp)
+                    .size(35.dp)
                     .background(
                         color = color.copy(
-                            alpha = 0.2f
+                            alpha = 0.1f
                         ),
                         shape = RoundedCornerShape(100),
                     )
-                    .padding(10.dp),
+                    .padding(8.dp),
                 contentAlignment = Alignment.Center
             ) {
                 CustomIcon(
                     icon = icon,
-                    size = 30,
+                    size = 50,
                     tint = color
                 )
             }
-            Spacer(modifier = Modifier.height(5.dp))
+            Spacer(modifier = Modifier.height(10.dp))
             Text(
                 text = "$number",
-                fontSize = 16.sp,
+                fontSize = 22.sp,
                 color = Color.Black,
                 fontWeight = FontWeight.Bold
             )
-            Spacer(modifier = Modifier.height(5.dp))
+            Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = title,
-                fontSize = 16.sp,
+                fontSize = 13.sp,
                 color = Color.Black,
-                fontWeight = FontWeight.W800
+                fontWeight = FontWeight.W600
             )
         }
     }
