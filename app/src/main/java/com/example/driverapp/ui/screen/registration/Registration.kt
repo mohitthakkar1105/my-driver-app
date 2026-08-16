@@ -34,9 +34,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.driverapp.ui.components.AppButton
 import com.example.driverapp.ui.components.CustomIcon
 import com.example.driverapp.ui.navigation.AppController
-import com.example.driverapp.ui.navigation.HomeRoute
-import com.example.driverapp.ui.navigation.RegistrationRoute
-import com.example.driverapp.ui.screen.otp.OtpUiEffect
+import com.example.driverapp.ui.navigation.MainRoute
 import com.example.driverapp.ui.screen.registration.composables.AadhaarInformation
 import com.example.driverapp.ui.screen.registration.composables.PersonalInformation
 import com.example.driverapp.ui.screen.registration.composables.UploadDocuments
@@ -74,7 +72,7 @@ fun Registration(
         viewModel.uiEffect.collect { uiEffect ->
             when (uiEffect) {
                 is RegistrationUiEffect.NavigateToHome -> {
-                    appController.navController.navigate(HomeRoute)
+                    appController.navController.navigate(MainRoute)
                 }
             }
         }

@@ -26,4 +26,4 @@ data class OtpRoute(
 data object RegistrationRoute : Screen
 
 @Serializable
-data object HomeRoute : Screen
+data object MainRoute : Screen

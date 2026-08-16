@@ -9,6 +9,7 @@ import androidx.navigation.toRoute
 import com.example.driverapp.ui.screen.home.HomeScreen
 import com.example.driverapp.ui.screen.registration.Registration
 import com.example.driverapp.ui.screen.login.Login
+import com.example.driverapp.ui.screen.main.MainScreen
 import com.example.driverapp.ui.screen.otp.Otp
 import com.example.driverapp.ui.screen.splash.Splash
 
@@ -55,8 +56,8 @@ fun AppNavigation() {
             )
         }
 
-        composable<HomeRoute> {
-            HomeScreen(
+        composable<MainRoute> {
+            MainScreen(
                 appController = appController
             )
         }

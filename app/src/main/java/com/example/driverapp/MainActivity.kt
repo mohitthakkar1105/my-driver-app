@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.view.WindowCompat
 import com.example.driverapp.ui.navigation.AppNavigation
 import com.example.driverapp.ui.theme.DriverAppTheme
 
@@ -18,6 +19,14 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        //--------ye system naviagation color change hai--
+        window.navigationBarColor = android.graphics.Color.BLACK
+
+        WindowCompat.getInsetsController(
+            window,
+            window.decorView
+        ).isAppearanceLightNavigationBars = false
+        //--------ye system naviagation color change hai--
         setContent {
             DriverAppTheme {
                 AppNavigation()
