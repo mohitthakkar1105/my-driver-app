@@ -12,6 +12,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.driverapp.ui.components.AppBottomBar
 import com.example.driverapp.ui.components.HomeAppBar
+import com.example.driverapp.ui.components.PassesAppBar
 import com.example.driverapp.ui.navigation.AppController
 import com.example.driverapp.ui.screen.home.HomeScreen
 import com.example.driverapp.ui.screen.home.HomeViewModel
@@ -39,11 +40,13 @@ fun MainScreen(
             )
         },
         topBar = {
-//            if (changeBottomNavIndex == 0) {
+            if (changeBottomNavIndex == 0) {
                 HomeAppBar(
                     address = uiState.address
                 )
-//            }
+            } else if (changeBottomNavIndex == 3) {
+                PassesAppBar()
+            }
         }
     ) { paddingValues ->
         when (changeBottomNavIndex) {
