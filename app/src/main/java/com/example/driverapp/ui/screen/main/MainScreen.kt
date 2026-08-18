@@ -16,6 +16,7 @@ import com.example.driverapp.ui.components.PassesAppBar
 import com.example.driverapp.ui.navigation.AppController
 import com.example.driverapp.ui.screen.home.HomeScreen
 import com.example.driverapp.ui.screen.home.HomeViewModel
+import com.example.driverapp.ui.screen.passess.Passes
 
 @Composable
 fun MainScreen(
@@ -28,6 +29,10 @@ fun MainScreen(
     val viewModel = viewModel<HomeViewModel>()
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    val viewModelMain = viewModel<MainViewModel>()
+
+    val uiStateMainScreen by viewModelMain.uiState.collectAsStateWithLifecycle()
 
 
     Scaffold(
@@ -45,7 +50,12 @@ fun MainScreen(
                     address = uiState.address
                 )
             } else if (changeBottomNavIndex == 3) {
-                PassesAppBar()
+                PassesAppBar(
+                    tab = uiStateMainScreen.tabIndex,
+                    changeTab = {
+                        viewModelMain.onEvent(MainEvent.OnTabChange(it))
+                    }
+                )
             }
         }
     ) { paddingValues ->
@@ -53,7 +63,7 @@ fun MainScreen(
             0 -> HomeScreen(modifier = Modifier.padding(paddingValues))
             1 -> HomeScreen(modifier = Modifier.padding(paddingValues))
             2 -> HomeScreen(modifier = Modifier.padding(paddingValues))
-            3 -> HomeScreen(modifier = Modifier.padding(paddingValues))
+            3 -> Passes(modifier = Modifier.padding(paddingValues))
         }
     }
 }

@@ -34,9 +34,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun PassesAppBar() {
+fun PassesAppBar(
+    tab : Int,
+    changeTab : (Int) -> Unit
+) {
 
-    var tabIndex by remember { mutableStateOf(0) }
 
     // Row ki actual pixel width yahan store hogi
     var rowWidthPx by remember { mutableIntStateOf(0) }
@@ -75,14 +77,16 @@ fun PassesAppBar() {
                         .clickable(
                             indication = null,
                             interactionSource = remember { MutableInteractionSource() }
-                        ) { tabIndex = 0 },
+                        ) {
+                            changeTab(0)
+                          },
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
                         "Available Plans",
-                        fontSize = 12.sp,
+                        fontSize = if (tab==0) 13.sp else 12.sp,
                         fontWeight = FontWeight.ExtraBold,
-                        color = if (tabIndex == 0) Color.Black else Color.Gray
+                        color = if (tab == 0) Color.Black else Color.Gray
                     )
                 }
                 Box(
@@ -91,14 +95,16 @@ fun PassesAppBar() {
                         .clickable(
                             indication = null,
                             interactionSource = remember { MutableInteractionSource() }
-                        ) { tabIndex = 1 },
+                        ) {
+                            changeTab(1)
+                          },
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
                         "Pass History",
-                        fontSize = 13.sp,
+                        fontSize = if (tab==1) 13.sp else 12.sp,
                         fontWeight = FontWeight.ExtraBold,
-                        color = if (tabIndex == 1) Color.Black else Color.Gray
+                        color = if (tab == 1) Color.Black else Color.Gray
                     )
                 }
             }
@@ -109,7 +115,7 @@ fun PassesAppBar() {
             val thumbWidthDp = with(density) { (rowWidthPx / 2).toDp() }
 
             val thumbOffset by animateDpAsState(
-                targetValue = if (tabIndex == 1) thumbWidthDp else 0.dp,
+                targetValue = if (tab == 1) thumbWidthDp else 0.dp,
                 label = "IndicatorAnimation"
             )
 
