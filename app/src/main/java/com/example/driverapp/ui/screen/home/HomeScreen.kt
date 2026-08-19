@@ -45,7 +45,6 @@ import com.example.driverapp.ui.components.CustomImage
 import com.example.driverapp.ui.components.HomeAppBar
 import com.example.driverapp.ui.navigation.AppController
 import com.example.driverapp.utils.LocationService.requestLocationUpdates
-import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -66,7 +65,6 @@ fun HomeScreen(
 
     val geocoder = Geocoder(
         context,
-        LocalLocale.current.platformLocale
     )
 
     val viewModel = viewModel<HomeViewModel>()

@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -25,6 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.driverapp.ui.components.AppAvailablePlanCard
 import com.example.driverapp.ui.components.CustomIcon
 import com.example.driverapp.ui.components.PassesHeadings
 
@@ -33,16 +35,18 @@ fun AvailablePlan() {
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .wrapContentHeight()
             .background(
                 color = Color.Transparent
             )
-            .padding(20.dp)
+            .padding(start = 20.dp, end = 20.dp)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
+            Spacer(modifier = Modifier.height(20.dp))
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -153,6 +157,29 @@ fun AvailablePlan() {
                 heading = "Available Plans",
                 value = "9 Plans"
             )
+            Spacer(modifier = Modifier.height(17.dp))
+            AppAvailablePlanCard(
+                passTitleName = "Weekly",
+                passSubTitleName = "weekly pass",
+                price = "199",
+                validDays = "6",
+                maxRides = "5",
+                commissionPercent = "10",
+                isCommissionFree = true,
+                onBuyClick = {}
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            AppAvailablePlanCard(
+                passTitleName = "Weekly",
+                passSubTitleName = "weekly pass",
+                price = "199",
+                validDays = "6",
+                maxRides = "5",
+                commissionPercent = "10",
+                isCommissionFree = true,
+                onBuyClick = {}
+            )
+            Spacer(modifier = Modifier.height(30.dp))
         }
     }
 }

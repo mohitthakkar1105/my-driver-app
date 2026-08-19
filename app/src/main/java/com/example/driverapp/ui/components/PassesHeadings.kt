@@ -72,6 +72,7 @@ fun PassesHeadings(
             Text(
                 value,
                 fontSize = 12.sp,
+                fontWeight = FontWeight.Bold,
                 color = Color(0xFF1A1A1A)
             )
         }
