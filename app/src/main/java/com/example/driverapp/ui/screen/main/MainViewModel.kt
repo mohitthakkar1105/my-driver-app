@@ -15,6 +15,12 @@ class MainViewModel : ViewModel() {
                     tabIndex = event.tabIndex
                 )
             }
+
+            is MainEvent.OnTabChangeTrip -> {
+                _uiState.value = _uiState.value.copy(
+                    tabIndexTrip = event.tabIndexTrip
+                )
+            }
         }
     }
 }

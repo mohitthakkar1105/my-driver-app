@@ -1,0 +1,169 @@
+package com.example.driverapp.ui.components
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.DirectionsCar
+import androidx.compose.material.icons.rounded.History
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+
+@Composable
+fun TripAppBar(
+    tab: Int,
+    changeTab: (Int) -> Unit
+) {
+
+    // Row ki actual pixel width yahan store hogi
+    var rowWidthPx by remember { mutableIntStateOf(0) }
+    val density = LocalDensity.current
+
+    // Indicator ka offset px me — Animatable se hum khud control karenge
+    // ki kab snap karna hai (bina animation) aur kab animate karna hai
+    val offsetPx = remember { Animatable(0f) }
+
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(color = Color(0xFFB7C145).copy(alpha = 0.7f))
+            .statusBarsPadding()
+            .padding(start = 15.dp, end = 15.dp, top = 15.dp)
+    ) {
+        Column(modifier = Modifier.fillMaxWidth()) {
+
+            Text(text = "My Trips", fontSize = 20.sp, fontWeight = FontWeight.ExtraBold)
+            Text(
+                text = "Your complete ride history",
+                fontSize = 13.sp,
+                color = Color.Black.copy(
+                    alpha = 0.5f
+                )
+            )
+            Spacer(modifier = Modifier.height(25.dp))
+            // Tabs Row — iski width naapenge onSizeChanged se
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .onSizeChanged { size ->
+                        rowWidthPx = size.width
+                    }
+            ) {
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .clickable(
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }
+                        ) {
+                            changeTab(0)
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        CustomIcon(
+                            icon = Icons.Rounded.DirectionsCar,
+                            tint = if (tab == 0) Color.Black else Color.Gray
+                        )
+                        Text(
+                            "Active Ride",
+                            fontSize = if (tab == 0) 13.sp else 12.sp,
+                            fontWeight = FontWeight.ExtraBold,
+                            color = if (tab == 0) Color.Black else Color.Gray
+                        )
+                    }
+                }
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .clickable(
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }
+                        ) {
+                            changeTab(1)
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        CustomIcon(
+                            icon = Icons.Rounded.History,
+                            tint = if (tab == 1) Color.Black else Color.Gray
+                        )
+                        Text(
+                            "Rides",
+                            fontSize = if (tab == 1) 13.sp else 12.sp,
+                            fontWeight = FontWeight.ExtraBold,
+                            color = if (tab == 1) Color.Black else Color.Gray
+                        )
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(4.dp))
+
+            // Dynamic width — naapi hui width ka aadha
+            val thumbWidthDp = with(density) { (rowWidthPx / 2).toDp() }
+
+            // 1) Jab bhi rowWidthPx pehli baar milti hai ya re-measure hoti hai
+            //    (screen re-enter hone par), turant sahi position pe SNAP karo —
+            //    koi animation nahi, taaki "moving box" wala glitch na dikhe.
+            LaunchedEffect(rowWidthPx) {
+                if (rowWidthPx > 0) {
+                    val target = if (tab == 1) rowWidthPx / 2f else 0f
+                    offsetPx.snapTo(target)
+                }
+            }
+
+            // 2) Jab user actually tab change kare, tab hi smoothly ANIMATE karo.
+            LaunchedEffect(tab) {
+                if (rowWidthPx > 0) {
+                    val target = if (tab == 1) rowWidthPx / 2f else 0f
+                    offsetPx.animateTo(
+                        targetValue = target,
+                        animationSpec = tween(durationMillis = 300)
+                    )
+                }
+            }
+
+            Box(
+                modifier = Modifier
+                    .width(thumbWidthDp)
+                    .height(3.dp)
+                    .offset { IntOffset(offsetPx.value.toInt(), 0) }
+                    .background(color = Color(0xFFB7C145))
+            )
+        }
+    }
+}

@@ -13,10 +13,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.driverapp.ui.components.AppBottomBar
 import com.example.driverapp.ui.components.HomeAppBar
 import com.example.driverapp.ui.components.PassesAppBar
+import com.example.driverapp.ui.components.TripAppBar
 import com.example.driverapp.ui.navigation.AppController
 import com.example.driverapp.ui.screen.home.HomeScreen
 import com.example.driverapp.ui.screen.home.HomeViewModel
 import com.example.driverapp.ui.screen.passess.Passes
+import com.example.driverapp.ui.screen.trip.TripScreen
 
 @Composable
 fun MainScreen(
@@ -49,6 +51,13 @@ fun MainScreen(
                 HomeAppBar(
                     address = uiState.address
                 )
+            } else if (changeBottomNavIndex == 1) {
+                TripAppBar(
+                    tab = uiStateMainScreen.tabIndexTrip,
+                    changeTab = {
+                        viewModelMain.onEvent(MainEvent.OnTabChangeTrip(it))
+                    }
+                )
             } else if (changeBottomNavIndex == 3) {
                 PassesAppBar(
                     tab = uiStateMainScreen.tabIndex,
@@ -61,7 +70,7 @@ fun MainScreen(
     ) { paddingValues ->
         when (changeBottomNavIndex) {
             0 -> HomeScreen(modifier = Modifier.padding(paddingValues))
-            1 -> HomeScreen(modifier = Modifier.padding(paddingValues))
+            1 -> TripScreen(modifier = Modifier.padding(paddingValues))
             2 -> HomeScreen(modifier = Modifier.padding(paddingValues))
             3 -> Passes(modifier = Modifier.padding(paddingValues))
         }

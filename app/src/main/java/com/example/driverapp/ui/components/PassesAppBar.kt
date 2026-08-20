@@ -1,6 +1,7 @@
 package com.example.driverapp.ui.components
 
-import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -19,9 +20,9 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -30,19 +31,23 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
 fun PassesAppBar(
-    tab : Int,
-    changeTab : (Int) -> Unit
+    tab: Int,
+    changeTab: (Int) -> Unit
 ) {
-
 
     // Row ki actual pixel width yahan store hogi
     var rowWidthPx by remember { mutableIntStateOf(0) }
     val density = LocalDensity.current
+
+    // Indicator ka offset px me — khud control karenge
+    // ki kab snap karna hai (bina animation) aur kab animate karna hai
+    val offsetPx = remember { Animatable(0f) }
 
     Box(
         modifier = Modifier
@@ -79,12 +84,12 @@ fun PassesAppBar(
                             interactionSource = remember { MutableInteractionSource() }
                         ) {
                             changeTab(0)
-                          },
+                        },
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
                         "Available Plans",
-                        fontSize = if (tab==0) 13.sp else 12.sp,
+                        fontSize = if (tab == 0) 13.sp else 12.sp,
                         fontWeight = FontWeight.ExtraBold,
                         color = if (tab == 0) Color.Black else Color.Gray
                     )
@@ -97,12 +102,12 @@ fun PassesAppBar(
                             interactionSource = remember { MutableInteractionSource() }
                         ) {
                             changeTab(1)
-                          },
+                        },
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
                         "Pass History",
-                        fontSize = if (tab==1) 13.sp else 12.sp,
+                        fontSize = if (tab == 1) 13.sp else 12.sp,
                         fontWeight = FontWeight.ExtraBold,
                         color = if (tab == 1) Color.Black else Color.Gray
                     )
@@ -114,16 +119,32 @@ fun PassesAppBar(
             // Dynamic width — naapi hui width ka aadha
             val thumbWidthDp = with(density) { (rowWidthPx / 2).toDp() }
 
-            val thumbOffset by animateDpAsState(
-                targetValue = if (tab == 1) thumbWidthDp else 0.dp,
-                label = "IndicatorAnimation"
-            )
+            // 1) Jab bhi rowWidthPx pehli baar milti hai ya re-measure hoti hai
+            //    (screen re-enter hone par), turant sahi position pe SNAP karo —
+            //    koi animation nahi, taaki "moving box" wala glitch na dikhe.
+            LaunchedEffect(rowWidthPx) {
+                if (rowWidthPx > 0) {
+                    val target = if (tab == 1) rowWidthPx / 2f else 0f
+                    offsetPx.snapTo(target)
+                }
+            }
+
+            // 2) Jab user actually tab change kare, tab hi smoothly ANIMATE karo.
+            LaunchedEffect(tab) {
+                if (rowWidthPx > 0) {
+                    val target = if (tab == 1) rowWidthPx / 2f else 0f
+                    offsetPx.animateTo(
+                        targetValue = target,
+                        animationSpec = tween(durationMillis = 300)
+                    )
+                }
+            }
 
             Box(
                 modifier = Modifier
                     .width(thumbWidthDp)
                     .height(3.dp)
-                    .offset(x = thumbOffset)
+                    .offset { IntOffset(offsetPx.value.toInt(), 0) }
                     .background(color = Color(0xFFB7C145))
             )
         }

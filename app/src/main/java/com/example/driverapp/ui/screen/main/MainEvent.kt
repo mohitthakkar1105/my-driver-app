@@ -5,4 +5,7 @@ sealed interface MainEvent {
         val tabIndex: Int
     ) : MainEvent
 
+    data class OnTabChangeTrip(
+        val tabIndexTrip: Int
+    ) : MainEvent
 }
