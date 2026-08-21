@@ -30,3 +30,6 @@ data object MainRoute : Screen
 
 @Serializable
 data object ProfileRoute : Screen
+
+@Serializable
+data object SubProfileRoute : Screen

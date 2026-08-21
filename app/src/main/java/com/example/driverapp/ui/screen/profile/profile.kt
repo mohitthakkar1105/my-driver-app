@@ -35,6 +35,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -44,18 +45,34 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.driverapp.R
 import com.example.driverapp.ui.components.AppButton
 import com.example.driverapp.ui.components.CustomIcon
 import com.example.driverapp.ui.components.CustomImage
 import com.example.driverapp.ui.components.ProfileMenuItem
 import com.example.driverapp.ui.navigation.AppController
+import com.example.driverapp.ui.navigation.SubProfileRoute
+import com.example.driverapp.ui.screen.otp.OtpViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Profile(
     appController: AppController
 ) {
+
+    val viewModel = viewModel<ProfileViewModel>()
+
+    LaunchedEffect(Unit) {
+        viewModel.uiEffect.collect { uiEffect ->
+            when (uiEffect) {
+                is ProfileUiEffect.NavigateToSubProfile -> {
+                    appController.navController.navigate(SubProfileRoute)
+                }
+            }
+        }
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -213,7 +230,11 @@ fun Profile(
                     icon = Icons.Outlined.Person,
                     iconBoxColor = Color(0xFFE8F0FE),
                     iconTint = Color(0xFF3B82F6),
-                    onClick = { }
+                    onClick = {
+                        viewModel.onEvent(
+                            ProfileEvent.ClickOnMyProfile
+                        )
+                    }
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
