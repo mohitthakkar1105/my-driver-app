@@ -27,3 +27,6 @@ data object RegistrationRoute : Screen
 
 @Serializable
 data object MainRoute : Screen
+
+@Serializable
+data object ProfileRoute : Screen

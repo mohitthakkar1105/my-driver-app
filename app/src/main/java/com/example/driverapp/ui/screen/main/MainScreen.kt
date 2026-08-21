@@ -3,6 +3,7 @@ package com.example.driverapp.ui.screen.main
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -15,6 +16,7 @@ import com.example.driverapp.ui.components.HomeAppBar
 import com.example.driverapp.ui.components.PassesAppBar
 import com.example.driverapp.ui.components.TripAppBar
 import com.example.driverapp.ui.navigation.AppController
+import com.example.driverapp.ui.navigation.ProfileRoute
 import com.example.driverapp.ui.screen.home.HomeScreen
 import com.example.driverapp.ui.screen.home.HomeViewModel
 import com.example.driverapp.ui.screen.passess.Passes
@@ -36,6 +38,15 @@ fun MainScreen(
 
     val uiStateMainScreen by viewModelMain.uiState.collectAsStateWithLifecycle()
 
+    LaunchedEffect(Unit) {
+        viewModelMain.uiEffect.collect { uiEffect ->
+            when (uiEffect) {
+                MainUiEffect.NavigateToProfile -> {
+                    appController.navController.navigate(ProfileRoute)
+                }
+            }
+        }
+    }
 
     Scaffold(
         bottomBar = {
@@ -49,7 +60,12 @@ fun MainScreen(
         topBar = {
             if (changeBottomNavIndex == 0) {
                 HomeAppBar(
-                    address = uiState.address
+                    address = uiState.address,
+                    goToProfile = {
+                        viewModelMain.onEvent(
+                            MainEvent.OnProfileClick
+                        )
+                    }
                 )
             } else if (changeBottomNavIndex == 1) {
                 TripAppBar(

@@ -2,6 +2,7 @@ package com.example.driverapp.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,7 +35,8 @@ import com.example.driverapp.R
 
 @Composable
 fun HomeAppBar(
-    address : String
+    address: String,
+    goToProfile : ()-> Unit
 ) {
     Box(
         modifier = Modifier
@@ -58,6 +60,11 @@ fun HomeAppBar(
                         color = Color(0xFFB7C145),
                         width = 2.dp,
                         shape = RoundedCornerShape(100.dp)
+                    )
+                    .clickable(
+                        onClick = {
+                            goToProfile()
+                        }
                     )
             ) {
                 CustomImage(
@@ -84,7 +91,7 @@ fun HomeAppBar(
                         size = 15
                     )
                     Text(
-                        text = if (address.isEmpty()) "Location Unavailable" else address ,
+                        text = if (address.isEmpty()) "Location Unavailable" else address,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         fontSize = 12.sp,

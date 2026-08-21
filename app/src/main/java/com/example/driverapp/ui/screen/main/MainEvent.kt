@@ -8,4 +8,6 @@ sealed interface MainEvent {
     data class OnTabChangeTrip(
         val tabIndexTrip: Int
     ) : MainEvent
+
+    data object OnProfileClick : MainEvent
 }
