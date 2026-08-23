@@ -16,10 +16,15 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Edit
-import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,7 +42,8 @@ fun SubcategoriesCard(
     iconBoxColor: Color,
     iconTint: Color,
     icon: ImageVector,
-    onClick: () -> Unit,
+    onClick: (Int) -> Unit,
+    selectedEdit: Int,
     listItems: List<SubcategoriesCardItemModel>
 ) {
     Box(
@@ -97,8 +103,12 @@ fun SubcategoriesCard(
                 SubCategoriesCardItem(
                     SubCategoriesCardItemTitle = model.title,
                     SubCategoriesCardItemSubtitle = model.subTitle,
-                    onClick = onClick,
-                    icon = model.Icon
+                    onClick = {
+                        onClick(index)
+                    },
+                    icon = model.Icon,
+                    index = index,
+                    selectedEdit = selectedEdit
                 )
                 Spacer(modifier = Modifier.height(13.dp))
             }
@@ -110,6 +120,8 @@ fun SubcategoriesCard(
 private fun SubCategoriesCardItem(
     SubCategoriesCardItemTitle: String,
     SubCategoriesCardItemSubtitle: String,
+    index: Int,
+    selectedEdit: Int,
     icon: ImageVector,
     onClick: () -> Unit
 ) {
@@ -138,12 +150,79 @@ private fun SubCategoriesCardItem(
                 color = Color.Gray,
                 fontWeight = FontWeight.Normal
             )
-            Text(
-                text = SubCategoriesCardItemSubtitle,
-                fontSize = 16.sp,
-                color = Color.Black,
-                fontWeight = FontWeight.SemiBold
-            )
+            if (index == selectedEdit) {
+                var textValue by remember { mutableStateOf(SubCategoriesCardItemSubtitle) }
+
+                Spacer(modifier = Modifier.height(6.dp))
+
+                OutlinedTextField(
+                    value = textValue,
+                    onValueChange = { textValue = it }, // aapka wala function baad me yahan lagega
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(48.dp),
+                    singleLine = true,
+                    shape = RoundedCornerShape(10.dp),
+                    textStyle = androidx.compose.ui.text.TextStyle(
+                        fontSize = 15.sp,
+                        color = Color.Black
+                    ),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Color(0xFF1FAE5C),
+                        unfocusedBorderColor = Color(0xFF1FAE5C),
+                        cursorColor = Color(0xFF1FAE5C)
+                    )
+                )
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(Color(0xFF1FAE5C))
+                            .clickable {
+                                // update wala function baad me yahan
+                            }
+                            .padding(horizontal = 22.dp, vertical = 10.dp)
+                    ) {
+                        Text(
+                            text = "Update",
+                            color = Color.White,
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.width(10.dp))
+
+                    Box(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(Color(0xFFFDE8E8))
+                            .clickable {
+                                // cancel -> selectedEdit ko reset karna (-1 ya jo bhi aapka default value ho)
+                            }
+                            .padding(horizontal = 22.dp, vertical = 10.dp)
+                    ) {
+                        Text(
+                            text = "Cancel",
+                            color = Color(0xFFE53935),
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                    }
+                }
+            } else {
+                Text(
+                    text = SubCategoriesCardItemSubtitle,
+                    fontSize = 16.sp,
+                    color = Color.Black,
+                    fontWeight = FontWeight.SemiBold
+                )
+            }
         }
         Box(
             modifier = Modifier

@@ -32,6 +32,7 @@ import androidx.compose.material.icons.rounded.Verified
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,6 +41,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.driverapp.R
 import com.example.driverapp.ui.components.CustomIcon
 import com.example.driverapp.ui.components.CustomImage
@@ -47,36 +50,42 @@ import com.example.driverapp.ui.components.InfoChip
 import com.example.driverapp.ui.components.SubcategoriesCard
 import com.example.driverapp.ui.model.SubcategoriesCardItemModel
 import com.example.driverapp.ui.navigation.AppController
+import com.example.driverapp.ui.screen.home.HomeViewModel
 
 @Composable
 fun SubProfile(
     appController: AppController
 ) {
 
+    val viewModel = viewModel<SubProfileViewModel>()
+
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+
     val personalInfo = listOf<SubcategoriesCardItemModel>(
         SubcategoriesCardItemModel(
             title = "First Name",
-            subTitle = "aman",
+            subTitle = uiState.firstName,
             Icon = Icons.Outlined.Person
         ),
         SubcategoriesCardItemModel(
             title = "Last Name",
-            subTitle = "Singh",
+            subTitle = uiState.lastName,
             Icon = Icons.Outlined.Person
         ),
         SubcategoriesCardItemModel(
             title = "Phone",
-            subTitle = "7566850362",
+            subTitle = uiState.phone,
             Icon = Icons.Outlined.Phone
         ),
         SubcategoriesCardItemModel(
             title = "Email",
-            subTitle = "aman@gmail.com",
+            subTitle = uiState.email,
             Icon = Icons.Outlined.Mail
         ),
         SubcategoriesCardItemModel(
             title = "Gender",
-            subTitle = "Male",
+            subTitle = uiState.gender,
             Icon = Icons.Outlined.Male
         ),
     )
@@ -213,8 +222,15 @@ fun SubProfile(
                     iconBoxColor = Color(0xFFE8F0FE),
                     iconTint = Color(0xFF3B47A3),
                     icon = Icons.Outlined.Person,
-                    onClick = {},
-                    listItems = personalInfo
+                    onClick = {
+                        viewModel.onEvent(
+                            SubProfileEvent.EditProfileInfo(
+                                edit = it
+                            )
+                        )
+                    },
+                    listItems = personalInfo,
+                    selectedEdit = uiState.personalInfo
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 SubcategoriesCard(
@@ -223,7 +239,8 @@ fun SubProfile(
                     iconTint = Color(0xFF129182),
                     icon = Icons.Outlined.LocationOn,
                     onClick = {},
-                    listItems = addressInfo
+                    listItems = addressInfo,
+                    selectedEdit = uiState.personalInfo
                 )
             }
         }
