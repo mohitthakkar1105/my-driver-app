@@ -16,6 +16,24 @@ class SubProfileViewModel : ViewModel() {
                     personalInfo = event.edit
                 )
             }
+
+            is SubProfileEvent.EditAddressInfo -> {
+                _uiState.value = _uiState.value.copy(
+                    address = event.edit
+                )
+            }
+
+            is SubProfileEvent.EditDocumentInfo -> {
+                _uiState.value = _uiState.value.copy(
+                    document = event.edit
+                )
+            }
+
+            is SubProfileEvent.EditEmergencyContactInfo -> {
+                _uiState.value = _uiState.value.copy(
+                    emergencyContact = event.edit
+                )
+            }
         }
     }
 }

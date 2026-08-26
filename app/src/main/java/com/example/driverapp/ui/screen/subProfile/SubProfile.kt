@@ -2,6 +2,7 @@ package com.example.driverapp.ui.screen.subProfile
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,7 +20,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.CreditCard
+import androidx.compose.material.icons.outlined.Badge
+import androidx.compose.material.icons.outlined.DirectionsCar
+import androidx.compose.material.icons.outlined.DriveEta
+import androidx.compose.material.icons.outlined.Email
+import androidx.compose.material.icons.outlined.Emergency
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material.icons.outlined.LocationCity
 import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material.icons.outlined.Mail
@@ -29,6 +37,7 @@ import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Phone
 import androidx.compose.material.icons.outlined.Transgender
 import androidx.compose.material.icons.rounded.Verified
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,6 +45,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
@@ -60,7 +70,6 @@ fun SubProfile(
     val viewModel = viewModel<SubProfileViewModel>()
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-
 
     val personalInfo = listOf<SubcategoriesCardItemModel>(
         SubcategoriesCardItemModel(
@@ -93,28 +102,64 @@ fun SubProfile(
     val addressInfo = listOf<SubcategoriesCardItemModel>(
         SubcategoriesCardItemModel(
             title = "Address Line 1",
-            subTitle = "Indore, Madhya Pradesh, India",
+            subTitle = uiState.addressLine1,
             Icon = Icons.Outlined.Home
         ),
         SubcategoriesCardItemModel(
             title = "Address Line 2",
-            subTitle = "Indore, Madhya Pradesh, India",
+            subTitle = uiState.addressLine2,
             Icon = Icons.Outlined.Home
         ),
         SubcategoriesCardItemModel(
             title = "City",
-            subTitle = "Delhi, India",
+            subTitle = uiState.city,
             Icon = Icons.Outlined.LocationCity
         ),
         SubcategoriesCardItemModel(
             title = "State",
-            subTitle = "Madhya Pradesh, India",
+            subTitle = uiState.state,
             Icon = Icons.Outlined.Map
         ),
         SubcategoriesCardItemModel(
             title = "Pincode",
-            subTitle = "466464",
+            subTitle = uiState.pinCode,
             Icon = Icons.Outlined.LocationOn
+        ),
+    )
+
+    val documentsInfo = listOf<SubcategoriesCardItemModel>(
+        SubcategoriesCardItemModel(
+            title = "Aadhaar",
+            subTitle = uiState.aadhaar,
+            Icon = Icons.Filled.CreditCard
+        ),
+        SubcategoriesCardItemModel(
+            title = "License",
+            subTitle = uiState.license,
+            Icon = Icons.Outlined.DriveEta
+        ),
+    )
+
+    val emergencyContactInfo = listOf<SubcategoriesCardItemModel>(
+        SubcategoriesCardItemModel(
+            title = "Name",
+            subTitle = uiState.emergencyContactName,
+            Icon = Icons.Outlined.Person
+        ),
+        SubcategoriesCardItemModel(
+            title = "Email",
+            subTitle = uiState.emergencyContactEmail,
+            Icon = Icons.Outlined.Email
+        ),
+        SubcategoriesCardItemModel(
+            title = "Phone",
+            subTitle = uiState.emergencyContactPhone,
+            Icon = Icons.Outlined.Phone
+        ),
+        SubcategoriesCardItemModel(
+            title = "Permanent Home Address",
+            subTitle = uiState.emergencyContactHomeAddress,
+            Icon = Icons.Outlined.Home
         ),
     )
 
@@ -238,10 +283,274 @@ fun SubProfile(
                     iconBoxColor = Color(0xFFE0F2F2),
                     iconTint = Color(0xFF129182),
                     icon = Icons.Outlined.LocationOn,
-                    onClick = {},
+                    onClick = {
+                        viewModel.onEvent(
+                            SubProfileEvent.EditAddressInfo(
+                                edit = it
+                            )
+                        )
+                    },
                     listItems = addressInfo,
-                    selectedEdit = uiState.personalInfo
+                    selectedEdit = uiState.address
                 )
+                Spacer(modifier = Modifier.height(10.dp))
+                SubcategoriesCard(
+                    title = "Documents",
+                    iconBoxColor = Color(0xFFFFA726).copy(
+                        alpha = 0.1f
+                    ),
+                    iconTint = Color(0xFFFFA726),
+                    icon = Icons.Outlined.Badge,
+                    onClick = {
+                        viewModel.onEvent(
+                            SubProfileEvent.EditDocumentInfo(
+                                edit = it
+                            )
+                        )
+                    },
+                    listItems = documentsInfo,
+                    selectedEdit = uiState.document
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight()
+                        .shadow(
+                            elevation = 2.dp,
+                            shape = RoundedCornerShape(15.dp),
+                            clip = false
+                        )
+                        .background(
+                            color = Color.White,
+                            shape = RoundedCornerShape(15.dp)
+                        )
+                        .padding(
+                            15.dp
+                        )
+                ) {
+                    Column(
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Start
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .size(44.dp)
+                                    .clip(RoundedCornerShape(12.dp))
+                                    .background(
+                                        color = Color(0xFF9C27B0).copy(
+                                            alpha = 0.1f
+                                        )
+                                    ),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                CustomIcon(
+                                    icon = Icons.Outlined.Image,
+                                    tint = Color(0xFF9C27B0),
+                                    size = 20
+                                )
+                            }
+                            Spacer(modifier = Modifier.width(12.dp))
+                            Text(
+                                text = "Document Images",
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.SemiBold,
+                                color = Color(0xFF9C27B0)
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(10.dp))
+                        HorizontalDivider(
+                            modifier = Modifier.fillMaxWidth(),
+                            thickness = 0.51.dp,
+                            color = Color(0xFFE0E0E0)
+                        )
+                        Spacer(modifier = Modifier.height(5.dp))
+                        Text(
+                            text = "Aadhaar Card",
+                            fontSize = 12.sp,
+                            color = Color.Gray,
+                            fontWeight = FontWeight.Normal
+                        )
+                        Spacer(modifier = Modifier.height(5.dp))
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(100.dp)
+                                .clip(RoundedCornerShape(10.dp))
+                        ) {
+                            CustomImage(
+                                image = R.drawable.app_background,
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier.fillMaxSize()
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(5.dp))
+                        Text(
+                            text = "Driving Licence",
+                            fontSize = 12.sp,
+                            color = Color.Gray,
+                            fontWeight = FontWeight.Normal
+                        )
+                        Spacer(modifier = Modifier.height(5.dp))
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(100.dp)
+                                .clip(RoundedCornerShape(10.dp))
+                        ) {
+                            CustomImage(
+                                image = R.drawable.app_background,
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier.fillMaxSize()
+                            )
+                        }
+                    }
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+                SubcategoriesCard(
+                    title = "Emergency Contact",
+                    iconBoxColor = Color(0xFFF44336).copy(
+                        alpha = 0.1f
+                    ),
+                    iconTint = Color(0xFFF44336),
+                    icon = Icons.Outlined.Emergency,
+                    onClick = {
+                        viewModel.onEvent(
+                            SubProfileEvent.EditEmergencyContactInfo(
+                                edit = it
+                            )
+                        )
+                    },
+                    listItems = emergencyContactInfo,
+                    selectedEdit = uiState.emergencyContact
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight()
+                        .shadow(
+                            elevation = 2.dp,
+                            shape = RoundedCornerShape(15.dp),
+                            clip = false
+                        )
+                        .background(
+                            Color.White,
+                            shape = RoundedCornerShape(15.dp)
+                        )
+                        .padding(15.dp)
+                ) {
+                    Column(
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .size(44.dp)
+                                        .clip(RoundedCornerShape(12.dp))
+                                        .background(
+                                            color = Color(0xFF2196F3).copy(alpha = 0.1f)
+                                        ),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    CustomIcon(
+                                        icon = Icons.Outlined.DirectionsCar,
+                                        tint = Color(0xFF2196F3),
+                                        size = 20
+                                    )
+                                }
+                                Spacer(modifier = Modifier.width(12.dp))
+                                Text(
+                                    text = "My Vehicles",
+                                    fontSize = 16.sp,
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = Color(0xFF2196F3)
+                                )
+                            }
+                            InfoChip(
+                                text = "View All",
+                                color = Color(0xFF2196F3),
+                                cornerRadius = 100.dp,
+                                horizontalPadding = 12.dp,
+                                verticalPadding = 6.dp,
+                                fontSize = 13.sp,
+                                backgroundAlpha = 0.1f,
+                                borderAlpha = 0f
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(10.dp))
+                        HorizontalDivider(
+                            modifier = Modifier.fillMaxWidth(),
+                            thickness = 0.51.dp,
+                            color = Color(0xFFE0E0E0)
+                        )
+                        Spacer(modifier = Modifier.height(12.dp))
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .size(60.dp)
+                                    .clip(RoundedCornerShape(12.dp))
+                                    .background(
+                                        color = Color(0xFF2196F3).copy(alpha = 0.1f)
+                                    ),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                CustomIcon(
+                                    icon = Icons.Outlined.DirectionsCar,
+                                    tint = Color(0xFF2196F3),
+                                    size = 26
+                                )
+                            }
+                            Spacer(modifier = Modifier.width(12.dp))
+                            Column(
+                                modifier = Modifier.weight(1f)
+                            ) {
+                                Text(
+                                    text = "Tata Nexon",
+                                    fontSize = 15.sp,
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = Color(0xFF1A1A1A)
+                                )
+                                Text(
+                                    text = "MP09123457",
+                                    fontSize = 13.sp,
+                                    fontWeight = FontWeight.Medium,
+                                    color = Color(0xFF2196F3)
+                                )
+                                Text(
+                                    text = "Hatchback",
+                                    fontSize = 12.sp,
+                                    color = Color.Gray
+                                )
+                            }
+                            InfoChip(
+                                text = "Verified",
+                                color = Color(0xFF4CAF50),
+                                cornerRadius = 100.dp,
+                                horizontalPadding = 10.dp,
+                                verticalPadding = 5.dp,
+                                fontSize = 12.sp,
+                                backgroundAlpha = 0.1f,
+                                borderAlpha = 0f
+                            )
+                        }
+                    }
+                }
+                Spacer(modifier = Modifier.height(20.dp))
             }
         }
     }
