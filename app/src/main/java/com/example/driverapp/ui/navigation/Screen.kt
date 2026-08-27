@@ -33,3 +33,6 @@ data object ProfileRoute : Screen
 
 @Serializable
 data object SubProfileRoute : Screen
+
+@Serializable
+data object MyVehicleRoute : Screen

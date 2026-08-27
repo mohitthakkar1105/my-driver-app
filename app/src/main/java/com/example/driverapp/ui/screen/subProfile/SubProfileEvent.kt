@@ -18,4 +18,6 @@ sealed interface SubProfileEvent {
         val edit: Int
     ) : SubProfileEvent
 
+    data object ClickToMyVehicle : SubProfileEvent
+
 }

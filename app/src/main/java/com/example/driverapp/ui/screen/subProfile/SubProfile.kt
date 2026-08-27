@@ -2,6 +2,7 @@ package com.example.driverapp.ui.screen.subProfile
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,12 +36,12 @@ import androidx.compose.material.icons.outlined.Male
 import androidx.compose.material.icons.outlined.Map
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Phone
-import androidx.compose.material.icons.outlined.Transgender
 import androidx.compose.material.icons.rounded.Verified
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -60,7 +61,7 @@ import com.example.driverapp.ui.components.InfoChip
 import com.example.driverapp.ui.components.SubcategoriesCard
 import com.example.driverapp.ui.model.SubcategoriesCardItemModel
 import com.example.driverapp.ui.navigation.AppController
-import com.example.driverapp.ui.screen.home.HomeViewModel
+import com.example.driverapp.ui.navigation.MyVehicleRoute
 
 @Composable
 fun SubProfile(
@@ -70,6 +71,16 @@ fun SubProfile(
     val viewModel = viewModel<SubProfileViewModel>()
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        viewModel.uiEffect.collect {
+            when (it) {
+                SubProfileUiEffect.NavigateToMyVehicle -> {
+                    appController.navController.navigate(MyVehicleRoute)
+                }
+            }
+        }
+    }
 
     val personalInfo = listOf<SubcategoriesCardItemModel>(
         SubcategoriesCardItemModel(
@@ -442,7 +453,15 @@ fun SubProfile(
                             Color.White,
                             shape = RoundedCornerShape(15.dp)
                         )
+                        .clickable(
+                            onClick = {
+                                viewModel.onEvent(
+                                    SubProfileEvent.ClickToMyVehicle
+                                )
+                            }
+                        )
                         .padding(15.dp)
+
                 ) {
                     Column(
                         modifier = Modifier.fillMaxWidth()
@@ -486,7 +505,7 @@ fun SubProfile(
                                 verticalPadding = 6.dp,
                                 fontSize = 13.sp,
                                 backgroundAlpha = 0.1f,
-                                borderAlpha = 0f
+                                borderAlpha = 0f,
                             )
                         }
                         Spacer(modifier = Modifier.height(10.dp))

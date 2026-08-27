@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun InfoChip(
-    text: String,
+    text: String?,
     color: Color,
     icon: ImageVector? = null,
     iconSize: Int = 11,
@@ -53,11 +53,13 @@ fun InfoChip(
             )
             Spacer(modifier = Modifier.width(3.dp))
         }
-        Text(
-            text = text,
-            color = color,
-            fontSize = fontSize,
-            fontWeight = FontWeight.SemiBold
-        )
+        if(text != null){
+            Text(
+                text = text,
+                color = color,
+                fontSize = fontSize,
+                fontWeight = FontWeight.SemiBold
+            )
+        }
     }
 }

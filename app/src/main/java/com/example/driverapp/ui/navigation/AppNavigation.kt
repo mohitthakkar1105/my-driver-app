@@ -10,6 +10,7 @@ import com.example.driverapp.ui.screen.home.HomeScreen
 import com.example.driverapp.ui.screen.registration.Registration
 import com.example.driverapp.ui.screen.login.Login
 import com.example.driverapp.ui.screen.main.MainScreen
+import com.example.driverapp.ui.screen.myVehicle.MyVehicleScreen
 import com.example.driverapp.ui.screen.otp.Otp
 import com.example.driverapp.ui.screen.profile.Profile
 import com.example.driverapp.ui.screen.splash.Splash
@@ -72,6 +73,12 @@ fun AppNavigation() {
 
         composable<SubProfileRoute> {
             SubProfile(
+                appController = appController
+            )
+        }
+
+        composable<MyVehicleRoute> {
+            MyVehicleScreen(
                 appController = appController
             )
         }
