@@ -25,6 +25,10 @@ import androidx.compose.material.icons.rounded.Verified
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,6 +40,31 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun VehicleCard() {
+
+    var showEditDialog by remember {
+        mutableStateOf(false)
+    }
+
+    var showDeleteDialog by remember { mutableStateOf(false) }
+
+
+    if (showEditDialog) {
+        EditVehicleDialogBox(
+            closeDialogBox = {
+                showEditDialog = it
+            }
+        )
+    }
+
+    if (showDeleteDialog) {
+        DeleteVehicleDialogBox(
+            onDismiss = { showDeleteDialog = false },
+            onConfirmDelete = {
+                showDeleteDialog = false
+            }
+        )
+    }
+
     Box(
         modifier = Modifier
             .padding(
@@ -133,7 +162,7 @@ fun VehicleCard() {
                         .clip(RoundedCornerShape(100))
                         .background(Color(0xFF2196F3).copy(alpha = 0.1f))
                         .clickable {
-                            // TODO: edit action
+                            showEditDialog = true
                         },
                     contentAlignment = Alignment.Center
                 ) {
@@ -152,7 +181,7 @@ fun VehicleCard() {
                         .clip(RoundedCornerShape(100))
                         .background(Color(0xFFF44336).copy(alpha = 0.1f))
                         .clickable {
-                            // TODO: delete action
+                            showDeleteDialog = true
                         },
                     contentAlignment = Alignment.Center
                 ) {
@@ -326,3 +355,4 @@ fun VehicleCardSubInfo(
         }
     }
 }
+

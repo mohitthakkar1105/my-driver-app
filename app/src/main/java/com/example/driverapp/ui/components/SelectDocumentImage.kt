@@ -1,4 +1,5 @@
 package com.example.driverapp.ui.components
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -27,10 +28,11 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun SelectDocumentImage(
-    title : String,
-    subTitle : String,
-    selectLicenceImage : ()-> Unit,
-    horizontalPadding : Int = 20
+    title: String,
+    subTitle: String,
+    selectLicenceImage: () -> Unit,
+    horizontalPadding: Int = 20,
+    showUploadButton: Boolean = true
 ) {
     Box(
         modifier = Modifier
@@ -47,7 +49,8 @@ fun SelectDocumentImage(
                 color = Color.Gray.copy(
                     alpha = 0.5f
                 )
-            ).clickable(
+            )
+            .clickable(
                 onClick = {
                     selectLicenceImage()
                 }
@@ -94,26 +97,28 @@ fun SelectDocumentImage(
                 )
             }
             Spacer(modifier = Modifier.width(12.dp))
-            Box(
-                modifier = Modifier
-                    .width(120.dp)
-                    .background(
-                        color = Color.Gray.copy(
-                            alpha = 0.2f
+            if (showUploadButton) {
+                Box(
+                    modifier = Modifier
+                        .width(120.dp)
+                        .background(
+                            color = Color.Gray.copy(
+                                alpha = 0.2f
+                            ),
+                            shape = RoundedCornerShape(40.dp)
+                        )
+                        .padding(
+                            5.dp
                         ),
-                        shape = RoundedCornerShape(40.dp)
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Upload",
+                        style = MaterialTheme.typography.titleMedium.copy(
+                            fontSize = 14.sp
+                        )
                     )
-                    .padding(
-                        5.dp
-                    ),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = "Upload",
-                    style = MaterialTheme.typography.titleMedium.copy(
-                        fontSize = 14.sp
-                    )
-                )
+                }
             }
         }
     }
