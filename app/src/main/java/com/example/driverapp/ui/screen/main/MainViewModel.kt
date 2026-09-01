@@ -38,6 +38,14 @@ class MainViewModel : ViewModel() {
                     )
                 }
             }
+
+            MainEvent.OnNotificationClick -> {
+                viewModelScope.launch {
+                    _uiEffect.emit(
+                        MainUiEffect.NavigateToNotification
+                    )
+                }
+            }
         }
     }
 }

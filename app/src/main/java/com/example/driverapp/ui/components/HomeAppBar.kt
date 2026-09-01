@@ -36,7 +36,8 @@ import com.example.driverapp.R
 @Composable
 fun HomeAppBar(
     address: String,
-    goToProfile : ()-> Unit
+    goToProfile: () -> Unit,
+    goToNotification: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -109,6 +110,11 @@ fun HomeAppBar(
                     .background(
                         color = Color.White,
                         shape = CircleShape
+                    )
+                    .clickable(
+                        onClick = {
+                            goToNotification()
+                        }
                     ),
                 contentAlignment = Alignment.Center
             ) {

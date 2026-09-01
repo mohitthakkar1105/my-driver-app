@@ -4,4 +4,5 @@ sealed class MainUiEffect {
 
     data object NavigateToProfile : MainUiEffect()
 
+    data object NavigateToNotification : MainUiEffect()
 }

@@ -10,4 +10,6 @@ sealed interface MainEvent {
     ) : MainEvent
 
     data object OnProfileClick : MainEvent
+
+    data object OnNotificationClick : MainEvent
 }

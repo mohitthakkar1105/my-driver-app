@@ -16,6 +16,7 @@ import com.example.driverapp.ui.components.HomeAppBar
 import com.example.driverapp.ui.components.PassesAppBar
 import com.example.driverapp.ui.components.TripAppBar
 import com.example.driverapp.ui.navigation.AppController
+import com.example.driverapp.ui.navigation.NotificationRoute
 import com.example.driverapp.ui.navigation.ProfileRoute
 import com.example.driverapp.ui.screen.home.HomeScreen
 import com.example.driverapp.ui.screen.home.HomeViewModel
@@ -44,6 +45,10 @@ fun MainScreen(
                 MainUiEffect.NavigateToProfile -> {
                     appController.navController.navigate(ProfileRoute)
                 }
+
+                MainUiEffect.NavigateToNotification -> {
+                    appController.navController.navigate(NotificationRoute)
+                }
             }
         }
     }
@@ -64,6 +69,11 @@ fun MainScreen(
                     goToProfile = {
                         viewModelMain.onEvent(
                             MainEvent.OnProfileClick
+                        )
+                    },
+                    goToNotification = {
+                        viewModelMain.onEvent(
+                            MainEvent.OnNotificationClick
                         )
                     }
                 )
