@@ -20,6 +20,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -28,12 +32,26 @@ import com.example.driverapp.ui.components.AppButton
 import com.example.driverapp.ui.components.CustomIcon
 import com.example.driverapp.ui.components.VehicleCard
 import com.example.driverapp.ui.navigation.AppController
+import com.example.driverapp.ui.screen.myVehicle.composable.AddVehicleModelBottomSheet
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyVehicleScreen(
     appController: AppController,
 ) {
+
+    var showBottomSheet by remember {
+        mutableStateOf(false)
+    }
+
+    if (showBottomSheet) {
+        AddVehicleModelBottomSheet(
+            setShowBottomSheet = {
+                showBottomSheet = it
+            }
+        )
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -67,7 +85,7 @@ fun MyVehicleScreen(
                             text = "Add",
                             icon = Icons.Default.Add,
                             onClick = {
-
+                                showBottomSheet = true
                             },
                             cornerRadius = 10,
                             textColor = Color.Blue,

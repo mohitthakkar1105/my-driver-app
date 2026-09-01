@@ -1,5 +1,7 @@
 package com.example.driverapp.ui.components
+
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -15,14 +17,19 @@ import com.example.driverapp.ui.theme.DriverBlack
 
 @Composable
 fun AppTextFieldLabel(
-    label : String,
+    label: String,
     fontWeight: FontWeight = FontWeight.W400,
-    fontSize : TextUnit = 15.sp
-){
+    fontSize: TextUnit = 15.sp,
+    contentPadding: PaddingValues = PaddingValues(
+        start = 20.dp,
+        top = 15.dp,
+        bottom = 8.dp
+    )
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 20.dp, top = 15.dp, bottom = 8.dp),
+            .padding(contentPadding),
         horizontalArrangement = Arrangement.Start
     ) {
         Text(

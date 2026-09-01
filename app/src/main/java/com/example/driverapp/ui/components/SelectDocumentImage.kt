@@ -29,12 +29,13 @@ import androidx.compose.ui.unit.sp
 fun SelectDocumentImage(
     title : String,
     subTitle : String,
-    selectLicenceImage : ()-> Unit
+    selectLicenceImage : ()-> Unit,
+    horizontalPadding : Int = 20
 ) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 20.dp)
+            .padding(horizontal = horizontalPadding.dp)
             .height(110.dp)
             .background(
                 color = Color.Transparent,
