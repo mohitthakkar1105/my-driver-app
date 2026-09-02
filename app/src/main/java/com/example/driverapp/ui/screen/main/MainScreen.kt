@@ -15,6 +15,7 @@ import com.example.driverapp.ui.components.AppBottomBar
 import com.example.driverapp.ui.components.HomeAppBar
 import com.example.driverapp.ui.components.PassesAppBar
 import com.example.driverapp.ui.components.TripAppBar
+import com.example.driverapp.ui.components.WalletAppBar
 import com.example.driverapp.ui.navigation.AppController
 import com.example.driverapp.ui.navigation.NotificationRoute
 import com.example.driverapp.ui.navigation.ProfileRoute
@@ -84,6 +85,8 @@ fun MainScreen(
                         viewModelMain.onEvent(MainEvent.OnTabChangeTrip(it))
                     }
                 )
+            } else if (changeBottomNavIndex == 2) {
+                WalletAppBar()
             } else if (changeBottomNavIndex == 3) {
                 PassesAppBar(
                     tab = uiStateMainScreen.tabIndex,
