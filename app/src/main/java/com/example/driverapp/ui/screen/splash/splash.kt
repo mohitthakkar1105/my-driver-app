@@ -1,4 +1,5 @@
 package com.example.driverapp.ui.screen.splash
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -10,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -22,7 +24,7 @@ import com.example.driverapp.ui.navigation.SplashRoute
 @Composable
 fun Splash(
     appController: AppController
-){
+) {
     val viewModel = viewModel<SplashViewModel>()
 
     LaunchedEffect(Unit) {
@@ -42,16 +44,17 @@ fun Splash(
         }
     }
 
-    Scaffold() {
-        _->
+    Scaffold() { _ ->
         Box(
-            modifier = Modifier.fillMaxSize().background(
-                color = MaterialTheme.colorScheme.background
-            ),
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    color = Color.White
+                ),
             contentAlignment = Alignment.Center
-        ){
+        ) {
             Image(
-                painter = painterResource(id =R.drawable.default_logo),
+                painter = painterResource(id = R.drawable.default_logo),
                 contentDescription = "",
                 modifier = Modifier.size(200.dp)
             )

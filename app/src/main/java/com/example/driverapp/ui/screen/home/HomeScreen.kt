@@ -120,9 +120,9 @@ fun HomeScreen(
                 .fillMaxSize()
                 .padding(
                     horizontal = 20.dp,
-                    vertical = 10.dp
                 ),
         ) {
+            Spacer(modifier = Modifier.height(10.dp))
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
